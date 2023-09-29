@@ -6,6 +6,8 @@ Check git log of the selected code.
 
 Call `require("git-log").check_log()` in mode `n` or mode `v`.
 
+> Remember to save the file before calling this function.
+
 <img src="https://github.com/niuiic/assets/blob/main/git-log.nvim/usage.gif" />
 
 ## Dependencies
