@@ -55,10 +55,16 @@ local check_log = function()
 	})
 
 	-- set buffer
-	vim.api.nvim_buf_set_option(bufnr, "modifiable", true)
-	vim.api.nvim_buf_set_option(bufnr, "filetype", "git")
+	vim.api.nvim_set_option_value("modifiable", true, {
+		buf = bufnr,
+	})
+	vim.api.nvim_set_option_value("filetype", "git", {
+		buf = bufnr,
+	})
 	vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, log)
-	vim.api.nvim_buf_set_option(bufnr, "modifiable", false)
+	vim.api.nvim_set_option_value("modifiable", false, {
+		buf = bufnr,
+	})
 
 	-- set keymap
 	vim.keymap.set("n", static.config.keymap.close, function()

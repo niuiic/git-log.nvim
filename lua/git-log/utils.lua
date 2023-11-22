@@ -19,7 +19,7 @@ local range = function()
 
 	local pos = vim.api.nvim_win_get_cursor(0)
 	return {
-		pos[1] - 1,
+		pos[1],
 		pos[1],
 	}
 end
