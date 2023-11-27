@@ -4,7 +4,7 @@ Check git log of the selected code.
 
 ## Usage
 
-Call `require("git-log").check_log()` in mode `n` or mode `v`.
+Just call `require("git-log").check_log()`.
 
 > Remember to save the file before calling this function.
 
