@@ -7,7 +7,7 @@ local separator = function(length)
 end
 
 local range = function()
-	if vim.fn.mode() == "v" then
+	if vim.fn.mode() == "n" then
 		local pos = vim.api.nvim_win_get_cursor(0)
 		return {
 			pos[1],
