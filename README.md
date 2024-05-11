@@ -2,6 +2,8 @@
 
 Check git log of the selected code.
 
+[More neovim plugins](https://github.com/niuiic/awesome-neovim-plugins)
+
 ## Usage
 
 Just call `require("git-log").check_log()`.
