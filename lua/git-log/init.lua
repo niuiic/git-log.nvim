@@ -13,19 +13,13 @@ local check_log = function()
 	-- check log
 	local file_name = vim.api.nvim_buf_get_name(0)
 	local line_range = utils.range()
-	local extra_args = core.lua.list.reduce(static.config.extra_args, function(prev_res, arg)
-		return prev_res .. " " .. arg
-	end, "")
-	local log = vim.api.nvim_exec2(
-		string.format("!git log %s -L %s,%s:%s", extra_args, line_range[1], line_range[2], file_name),
-		{ output = true }
-	)
+	local args = { "git", "log" }
+	args = vim.list_extend(args, static.config.extra_args)
+	args = vim.list_extend(args, { "-L", string.format("%s,%s:%s", line_range[1], line_range[2], file_name) })
+	local result = vim.system(args, { cwd = vim.fs.root(0, ".git") }):wait()
 
 	-- format log
-	log = core.lua.string.split(log.output, "\n")
-	log = core.lua.list.filter(log, function(_, i)
-		return i ~= 1 and i ~= 2
-	end)
+	local log = core.lua.string.split(result.stdout, "\n")
 	local new_log = {}
 	local first_commit = true
 	for i = 1, table.maxn(log), 1 do
