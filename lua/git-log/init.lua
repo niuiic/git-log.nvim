@@ -53,20 +53,19 @@ function M._display_log(log, width_ratio, height_ratio, quit_key)
 	end, { buffer = bufnr })
 
 	vim.api.nvim_set_option_value("modifiable", true, { buf = bufnr })
-	vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, lines)
+	vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, vim.list_extend({ "" }, lines))
 	vim.api.nvim_set_option_value("modifiable", false, { buf = bufnr })
 
 	local columns = vim.opt.columns:get()
-	local chars = string.rep("-", columns)
 	local ns_id = vim.api.nvim_create_namespace("git-log")
 
 	for i, lnum in ipairs(separate_lnums) do
-		if i ~= 1 then
-			vim.api.nvim_buf_set_extmark(bufnr, ns_id, lnum - 1, 0, {
-				virt_lines = { { { chars, "CursorLineNr" } } },
-				virt_lines_above = true,
-			})
-		end
+		local j = #separate_lnums - i + 1
+		local chars = string.format("[%s] %s", j, string.rep("-", columns - 3 - string.len(tostring(j))))
+		vim.api.nvim_buf_set_extmark(bufnr, ns_id, lnum, 0, {
+			virt_lines = { { { chars, "CursorLineNr" } } },
+			virt_lines_above = true,
+		})
 	end
 end
 
